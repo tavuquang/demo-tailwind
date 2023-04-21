@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {AiOutlineMenu} from 'react-icons/ai';
 import Modal from 'react-modal';
 
@@ -15,19 +15,30 @@ const customStyles = {
 
 const Index = () => {
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [theme, setTheme] = useState('light');
 
-    function openModal() {
+    const openModal = () => {
         setIsOpen(true);
-      }
+    }
     
-      function closeModal() {
+    const closeModal = () => {
         setIsOpen(false);
-      }
-    
+    }
+
+    useEffect(() => {
+        if(theme === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, [theme]);
+
+    const handleThemeSwitch = () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+    }  
 
     return (
         <>
-        <div>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -44,22 +55,23 @@ const Index = () => {
                     </ul>
                 </nav>
             </Modal>
-        </div>
-            <div className="flex justify-between bg-black text-white items-center">
-            <h4 className="tracking-widest uppercase font-bold text-white py-4 text-center ml-24">Demo</h4>
-            <button className='lg:hidden mr-10'>
-                <AiOutlineMenu size='1.875rem' onClick={openModal}/>
-            </button>
-            <nav className="max-lg:hidden justify-around mr-20">
-                <ul className="lg:flex justify-around">
-                    <li className="hover:bg-slate-700 py-2 w-28 rounded cursor-pointer text-center">Home</li>
-                    <li className="hover:bg-slate-700 py-2 w-28 rounded cursor-pointer text-center">Product</li>
-                    <li className="hover:bg-slate-700 py-2 w-28 rounded cursor-pointer text-center">Blog</li>
-                    <li className="hover:bg-slate-700 py-2 w-28 rounded cursor-pointer text-center">About</li>
-                    <li className="hover:bg-slate-700 py-2 w-28 rounded cursor-pointer text-center">Contact</li>
-                    <li className="hover:bg-slate-700 py-2 w-28 rounded cursor-pointer text-center">Feedback</li>
-                </ul>
-            </nav>
+
+            <div className="flex justify-between bg-black dark:bg-white text-white items-center fixed w-screen">
+                <h4 className="tracking-widest uppercase font-bold text-white dark:text-black py-4 text-center ml-24">Demo</h4>
+                <button className='lg:hidden mr-10'>
+                    <AiOutlineMenu size='1.875rem' onClick={openModal}/>
+                </button>
+                <nav className="max-lg:hidden justify-around">
+                    <ul className="lg:flex justify-around">
+                        <li className="hover:bg-slate-700 dark:text-black py-2 w-28 dark:hover:text-white rounded cursor-pointer text-center">Home</li>
+                        <li className="hover:bg-slate-700 dark:text-black py-2 w-28 dark:hover:text-white rounded cursor-pointer text-center">Product</li>
+                        <li className="hover:bg-slate-700 dark:text-black py-2 w-28 dark:hover:text-white rounded cursor-pointer text-center">Blog</li>
+                        <li className="hover:bg-slate-700 dark:text-black py-2 w-28 dark:hover:text-white rounded cursor-pointer text-center">About</li>
+                        <li className="hover:bg-slate-700 dark:text-black py-2 w-28 dark:hover:text-white rounded cursor-pointer text-center">Contact</li>
+                        <li className="hover:bg-slate-700 dark:text-black py-2 w-28 dark:hover:text-white rounded cursor-pointer text-center">Feedback</li>
+                    </ul>
+                </nav>
+                <button className='mr-20 bg-white text-black rounded py-1 px-2 text-center hover:bg-gray-600 hover:text-white' onClick={handleThemeSwitch}>Dark Mode</button>
             </div>
         </>
     );

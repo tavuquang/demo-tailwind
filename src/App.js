@@ -1,5 +1,4 @@
 import './App.css';
-// import Nav from './components/Nav';
 import AuthButtons from './components/AuthButtons';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -9,11 +8,12 @@ export default function App() {
   return (
     <>
       <MenuTop />
-      <div className="h-screen">
-        {/* <Nav /> */}
+      <div className="h-screen dark:bg-black">
         <main className='px-12 py-6'>
-          <AuthButtons />
-          <Header />
+          <div className='mt-2.5'>
+            <Header />
+            <AuthButtons />
+          </div>
         </main>
       </div>
       <Footer />
